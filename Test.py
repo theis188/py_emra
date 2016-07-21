@@ -1,7 +1,7 @@
 import py_emra
 import time
 
-Path = "C:\Users\Matt\Dropbox\PythEMRA\Stoich.xls"
+Path = r"C:\Users\Matt\Dropbox\PythEMRA\Stoich.xls"
 
 t = time.time()
 Results = py_emra.Main.Main(Path,StepNo=1)
