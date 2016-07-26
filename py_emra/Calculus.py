@@ -37,20 +37,21 @@ def diffEQBox(ODE,Obj,Uf,Uini,NoSteps,X,K):
 		ODE.set_f_params(U0,U1,Obj,K)
 		ODE.set_initial_value(X,0)
 		X = list(ODE.integrate(1))
-		if [j for j in X if j<0]:
+		if [j for j in X if (j<0 or j>100)]:
 			flag = 1
-			print 'Metab Neg Flag'
+			print 'Metab Instab Flag'
 		U0=U1[:]
 		jacval = Funeval(Obj["JacFun"],X+K+U0+[1])
 		eigV,_ = numpy.linalg.eig(jacval)
+		#print np.real(eigV)
+		#print 'X=',X
+		#print 'U=',U0
+		#print 'K=',K
+		#ccc = raw_input('Eigv, Pause...')
 		if np.ndarray.max(np.real(eigV))>1e-6:
 			print eigV
-			print 'K=',K
-			print 'X=',X
-			print 'U=',U
 			flag = 1
 			print 'Instability Flag'
-			cc = raw_input('pause...')
 		if flag: break
 	Results = {'X':X,'U':U0}
 	return Results
