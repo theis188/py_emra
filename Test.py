@@ -9,7 +9,13 @@ elapsed = time.time() - t
 
 print elapsed
 
+
 #EnzNo=2
 #EnsembleNo=0
 #stabplot(Results,EnzNo)
 #print Results[(EnsembleNo,EnzNo)]["Up"]
+
+EnzNo=0
+EnsembleNo=0
+print Results[(EnsembleNo,EnzNo)]["Up"]
+
