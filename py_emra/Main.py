@@ -14,6 +14,7 @@ def Main(Path,PertUp = 10.0,PertDown = 0.1,EnsembleSize = 100,RandFloor = 0.1,Ra
 
 	Xvals = [1]*len(Obj["X"])
 	Uvals = [1]*len(Obj["U"])
+	
 	Vref = [float(j) for j in Net["Vref"]]
 	Obj["JacFun"] = Funify(Obj["Jac"],Obj["X"]+Obj["K"]+Obj["U"]+[symbols('Outer')],[])
 	Obj["DFDUFun"] = Funify(Obj["DFDU"],Obj["X"]+Obj["K"]+Obj["U"]+[symbols('Outer')],[])
@@ -21,6 +22,10 @@ def Main(Path,PertUp = 10.0,PertDown = 0.1,EnsembleSize = 100,RandFloor = 0.1,Ra
 	Obj["VFun"] = Funify([Obj["V"]],Obj["X"]+Obj["K"]+Obj["U"]+[symbols('Outer')],[])
 
 	K = {}
+	Results = {}
+	Results['Params'] = {'StepNo':StepNo,'PertUp':PertUp,'PertDown':PertDown, 'Ens':EnsembleSize, 'nEnz':len(Obj["U"])}
+	Results['Net'] = Net
+	
 	for Ens in range(EnsembleSize):
 		Stable = False
 		while not Stable:
@@ -35,7 +40,6 @@ def Main(Path,PertUp = 10.0,PertDown = 0.1,EnsembleSize = 100,RandFloor = 0.1,Ra
 	steps = 500//StepNo if fast else 500
 	ODE = scipy.integrate.ode(diffEQ)
 	ODE.set_integrator('lsoda', nsteps=steps, rtol=reltol)
-	Results = {}
 	for Ens in range(EnsembleSize):
 		print Ens
 		for Enz in Enzr:
@@ -50,5 +54,5 @@ def Main(Path,PertUp = 10.0,PertDown = 0.1,EnsembleSize = 100,RandFloor = 0.1,Ra
 
 			Results[(Ens,Enz)]={'Up':UResults,'Down':DResults}
 	
-	Results['Params'] = {'StepNo':StepNo,'PertUp':PertUp,'PertDown':PertDown}
+
 	return Results

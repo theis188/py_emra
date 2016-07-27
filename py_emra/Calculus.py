@@ -43,13 +43,7 @@ def diffEQBox(ODE,Obj,Uf,Uini,NoSteps,X,K):
 		U0=U1[:]
 		jacval = Funeval(Obj["JacFun"],X+K+U0+[1])
 		eigV,_ = numpy.linalg.eig(jacval)
-		#print np.real(eigV)
-		#print 'X=',X
-		#print 'U=',U0
-		#print 'K=',K
-		#ccc = raw_input('Eigv, Pause...')
 		if np.ndarray.max(np.real(eigV))>1e-6:
-			print eigV
 			flag = 1
 			print 'Instability Flag'
 		if flag: break
