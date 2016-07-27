@@ -15,7 +15,7 @@ These are the functions contained. Access these functions by first writing 'impo
 
 +++ py_emra.Main.Main(Path,**kwargs) +++
 
-This is the main 
+This is the main function performing all the math, model construction, parameter sampling and integration. It ouputs results in a dictionary which can be saved and plotted.
 
 Arguments:
 
